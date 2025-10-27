@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="employeeDc"
+                  class="ru.sandmangroup.sandgame.entity.employee.Employee">
+            <fetchPlan extends="_base">
+                <property name="department" fetchPlan="_instance_name"/>
+                <property name="employeeProfession" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="employeeDl"/>
+            <loader id="employeeProfessionsDl" readOnly="true"/>
+            <collection id="employeeProfessionsDc" property="employeeProfession"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="employeeDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="firstNameField" property="firstName"/>
+            <textField id="middleNameField" property="middleName"/>
+            <textField id="lastNameField" property="lastName"/>
+            <entityPicker id="departmentField" property="department">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="ratingField" property="rating"/>
+        </formLayout>
+        <h3 id="employeeProfessionsTitle" text="msg://employeeDetailView.employeeProfessionsTitle.title"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="employeeProfessionsDataGrid.add"/>
+            <button id="editButton" action="employeeProfessionsDataGrid.exclude"/>
+            <button id="removeButton" action="employeeProfessionsDataGrid.refresh"/>
+        </hbox>
+        <dataGrid id="employeeProfessionsDataGrid" dataContainer="employeeProfessionsDc" minWidth="100px" width="100%">
+            <actions>
+                <action id="add" type="list_add"/>
+                <action id="exclude" type="list_exclude"/>
+                <action id="refresh" type="list_refresh"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

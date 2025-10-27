@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://departmentDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="departmentDc"
+                  class="ru.sandmangroup.sandgame.entity.Department">
+            <fetchPlan extends="_base">
+                <property name="parentDepartment" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="departmentDl"/>
+        </instance>
+        <collection id="employeesDc" class="ru.sandmangroup.sandgame.entity.employee.Employee">
+            <fetchPlan extends="_base"/>
+            <loader id="employeesDl" readOnly="true"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="departmentDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="nameField" property="name"/>
+            <entityPicker id="parentDepartmentField" property="parentDepartment">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="descriptionField" property="description"/>
+        </formLayout>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="employeesDataGrid.add"/>
+            <button id="editButton" action="employeesDataGrid.exclude"/>
+            <button id="removeButton" action="employeesDataGrid.refresh"/>
+            <simplePagination id="pagination" dataLoader="employeesDl"/>
+        </hbox>
+        <dataGrid id="employeesDataGrid" dataContainer="employeesDc" minWidth="100px" width="100%">
+            <actions>
+                <action id="add" type="list_add"/>
+                <action id="exclude" type="list_exclude"/>
+                <action id="refresh" type="list_refresh"/>
+            </actions>
+            <columns>
+                <column property="firstName"/>
+                <column property="middleName"/>
+                <column property="lastName"/>
+                <column property="rating"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

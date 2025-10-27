@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://professionLevelDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="professionLevelDc"
+                  class="ru.sandmangroup.sandgame.entity.employee.ProfessionLevel">
+            <fetchPlan extends="_base">
+                <property name="employeeSkills" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="professionLevelDl"/>
+            <loader id="employeeSkillsDl"/>
+            <collection id="employeeSkillsDc" property="employeeSkills"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="professionLevelDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="nameField" property="name"/>
+            <textField id="levelField" property="level"/>
+        </formLayout>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="addButton" action="employeeSkillsDataGrid.add"/>
+            <button id="createButton" action="employeeSkillsDataGrid.create"/>
+            <button id="editButton" action="employeeSkillsDataGrid.edit"/>
+            <button id="excludeButton" action="employeeSkillsDataGrid.exclude"/>
+            <button id="refreshButton" action="employeeSkillsDataGrid.refresh"/>
+            <button id="removeButton" action="employeeSkillsDataGrid.remove"/>
+        </hbox>
+        <h3 id="employeeSkillsTitle" text="msg://professionLevelDetailView.employeeSkills.title"/>
+        <dataGrid id="employeeSkillsDataGrid" dataContainer="employeeSkillsDc" minWidth="100px" width="100%">
+            <actions>
+                <action id="add" type="list_add"/>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="exclude" type="list_exclude"/>
+                <action id="refresh" type="list_refresh"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

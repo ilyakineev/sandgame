@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeProfessionDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="employeeProfessionDc"
+                  class="ru.sandmangroup.sandgame.entity.employee.EmployeeProfession">
+            <fetchPlan extends="_base">
+                <property name="professionLevels" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="employeeProfessionDl"/>
+            <loader id="professionLevelsDl"/>
+            <collection id="professionLevelsDc" property="professionLevels"/>
+        </instance>
+        <collection id="employeeSkillsDc" class="ru.sandmangroup.sandgame.entity.employee.EmployeeSkill">
+            <loader id="employeeSkillsDl" readOnly="true"/>
+            <fetchPlan extends="_base"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="employeeProfessionDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="nameField" property="name"/>
+        </formLayout>
+        <split width="100%" height="100%" minWidth="30%" splitterPosition="35">
+            <vbox>
+                <h3 id="professionLevelsTitle" text="msg://employeeProfessionDetailView.professionLevels.title"/>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createButton" action="professionLevelsDataGrid.add"/>
+                    <button id="editButton" action="professionLevelsDataGrid.exclude"/>
+                    <button id="removeButton" action="professionLevelsDataGrid.refresh"/>
+                </hbox>
+                <dataGrid id="professionLevelsDataGrid" dataContainer="professionLevelsDc" minWidth="100px"
+                          width="100%">
+                    <actions>
+                        <action id="add" type="list_add"/>
+                        <action id="exclude" type="list_exclude"/>
+                        <action id="refresh" type="list_refresh"/>
+                    </actions>
+                    <columns>
+                        <column property="name"/>
+                        <column property="level"/>
+                    </columns>
+                </dataGrid>
+            </vbox>
+            <vbox>
+                <h3 id="employeeSkillsTitle" text="msg://employeeProfessionDetailView.employeeSkills.title"/>
+                <hbox id="buttonsSkillsPanel" classNames="buttons-panel">
+                    <simplePagination id="employeeSkillsSimplePagination" dataLoader="employeeSkillsDl"/>
+                </hbox>
+                <dataGrid id="employeeSkillsDataGrid" dataContainer="employeeSkillsDc" minWidth="100px" width="100%">
+                    <columns>
+                        <column property="name"/>
+                    </columns>
+                </dataGrid>
+            </vbox>
+        </split>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

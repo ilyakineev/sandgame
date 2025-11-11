@@ -62,14 +62,15 @@ public class Employee {
     @Column(name = "DELETED_DATE")
     private OffsetDateTime deletedDate;
 
+    @NotNull
+    @JoinColumn(name = "USER_ID", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    private User user;
+
     @InstanceName
     @Column(name = "FIRST_NAME", nullable = false)
     @NotNull
     private String firstName;
-
-    @JoinColumn(name = "USER_ID")
-    @OneToOne(fetch = FetchType.LAZY)
-    private User user;
 
     @Column(name = "MIDDLE_NAME")
     private String middleName;

@@ -3,7 +3,11 @@
       title="msg://employeeCard.title">
     <data>
         <instance id="employeeDc" class="ru.sandmangroup.sandgame.entity.employee.Employee">
-            <loader id="employeeDl"/>
+            <loader id="employeeDl">
+                <query>
+                    <![CDATA[select e from sdg_Employee e where e.user = :user]]>
+                </query>
+            </loader>
             <fetchPlan extends="_base"/>
         </instance>
     </data>

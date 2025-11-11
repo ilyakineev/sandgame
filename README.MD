@@ -65,3 +65,21 @@ docker run --rm -p 8080:8080 --name sandgame sandgame_image
 Приложение будет доступно по адресу:
 
 [Сюда](http://localhost:8080)
+
+Можем сохранить образ и передать его любым способом
+
+```bash
+docker save -o sandgame_image.tar sandgame_image
+```
+
+Получатель должен распокавать образ командой 
+
+```bash
+docker load -i sandgame_image.tar 
+```
+
+И запустить проект 
+
+```bash
+docker run --rm -p 8080:8080 --name sandgame sandgame_image
+```

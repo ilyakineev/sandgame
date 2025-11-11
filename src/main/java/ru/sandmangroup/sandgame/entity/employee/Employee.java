@@ -14,6 +14,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import ru.sandmangroup.sandgame.entity.Department;
+import ru.sandmangroup.sandgame.entity.User;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -21,7 +22,8 @@ import java.util.UUID;
 
 @JmixEntity
 @Table(name = "SDG_EMPLOYEE", indexes = {
-        @Index(name = "IDX_SDG_EMPLOYEE_DEPARTMENT", columnList = "DEPARTMENT_ID")
+        @Index(name = "IDX_SDG_EMPLOYEE_DEPARTMENT", columnList = "DEPARTMENT_ID"),
+        @Index(name = "IDX_SDG_EMPLOYEE_USER", columnList = "USER_ID")
 })
 @Entity(name = "sdg_Employee")
 @Setter
@@ -65,6 +67,10 @@ public class Employee {
     @NotNull
     private String firstName;
 
+    @JoinColumn(name = "USER_ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Column(name = "MIDDLE_NAME")
     private String middleName;
 
@@ -77,8 +83,8 @@ public class Employee {
     private Department department;
 
     @JoinTable(name = "SDG_EMPLOYEE_EMPLOYEE_PROFESSION_LINK",
-            joinColumns = @JoinColumn(name = "EMPLOYEE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "EMPLOYEE_PROFESSION_ID"))
+            joinColumns = @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "EMPLOYEE_PROFESSION_ID", referencedColumnName = "ID"))
     @ManyToMany
     private List<EmployeeProfession> employeeProfession;
 

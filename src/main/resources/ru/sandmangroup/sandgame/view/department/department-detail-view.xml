@@ -11,7 +11,9 @@
             <loader id="departmentDl"/>
         </instance>
         <collection id="employeesDc" class="ru.sandmangroup.sandgame.entity.employee.Employee">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="user" fetchPlan="_base"/>
+            </fetchPlan>
             <loader id="employeesDl" readOnly="true"/>
         </collection>
     </data>

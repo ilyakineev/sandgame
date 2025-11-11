@@ -8,6 +8,7 @@
             <fetchPlan extends="_base">
                 <property name="department" fetchPlan="_instance_name"/>
                 <property name="employeeProfession" fetchPlan="_base"/>
+                <property name="user" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="employeeDl"/>
             <loader id="employeeProfessionsDl" readOnly="true"/>
@@ -37,6 +38,12 @@
                 </actions>
             </entityPicker>
             <textField id="ratingField" property="rating"/>
+            <entityPicker id="userField" property="user">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
         </formLayout>
         <h3 id="employeeProfessionsTitle" text="msg://employeeDetailView.employeeProfessionsTitle.title"/>
         <hbox id="buttonsPanel" classNames="buttons-panel">

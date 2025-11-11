@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeCard.title">
+    <data>
+        <instance id="employeeDc" class="ru.sandmangroup.sandgame.entity.employee.Employee">
+            <loader id="employeeDl"/>
+            <fetchPlan extends="_base"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <hbox width="100%">
+            <formLayout width="100%" dataContainer="employeeDc">
+                <textField readOnly="true" property="firstName"/>
+                <textField readOnly="true" property="lastName"/>
+                <textField readOnly="true" property="middleName"/>
+                <textField readOnly="true" property="rating"/>
+
+            </formLayout>
+        </hbox>
+        <tabSheet width="100%" height="100%">
+            <tab id="skill" label="Навыки">
+                <vbox>
+
+                </vbox>
+            </tab>
+            <tab id="value" label="Параметры">
+                <vbox>
+
+                </vbox>
+            </tab>
+            <tab id="pay" label="Оплата">
+                <vbox>
+
+                </vbox>
+            </tab>
+            <tab id="quests" label="Квесты">
+                <vbox>
+
+                </vbox>
+            </tab>
+        </tabSheet>
+    </layout>
+</view>

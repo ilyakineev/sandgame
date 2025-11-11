@@ -8,6 +8,7 @@
                     class="ru.sandmangroup.sandgame.entity.employee.Employee">
             <fetchPlan extends="_base">
                 <property name="department" fetchPlan="_instance_name"/>
+                <property name="user" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="employeesDl" readOnly="true"/>
         </collection>

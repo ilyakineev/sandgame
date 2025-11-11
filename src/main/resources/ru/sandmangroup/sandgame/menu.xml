@@ -11,6 +11,7 @@
               title="msg://ru.sandmangroup.sandgame.view.professionLevel/professionLevelListView.title"/>
         <item icon="vaadin:keyboard" view="sdg_EmployeeSkill.list"
               title="msg://ru.sandmangroup.sandgame.view.employeeskill/employeeSkillListView.title"/>
+        <item view="sdg_EmployeeCard" title="msg://ru.sandmangroup.sandgame.view.employeecard/employeeCard.title"/>
     </menu>
     <menu id="administrators" title="msg://ru.sandmangroup.sandgame/administrators">
         <item view="sdg_User.list" title="msg://ru.sandmangroup.sandgame.view.user/UserListView.title"/>

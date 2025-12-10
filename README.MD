@@ -1,17 +1,17 @@
-## 🚀 Инструкция по запуску проекта
+# Инструкция по запуску проекта
 
-### 📋 Требования
+## Требования
 
 Перед запуском убедитесь, что у вас установлено:
 
-* Java 17+
-* Gradle
-* Git
-* Проект склонирован к вам локально
+* **Java 17+**
+* **Gradle**
+* **Git**
+* Проект склонирован локально
 
 ---
 
-### 📂 1. Клонирование репозитория
+## 📂 1. Клонирование репозитория
 
 ```bash
 git clone https://github.com/ilyakineev/sandgame.git
@@ -20,17 +20,17 @@ cd sandgame
 
 ---
 
-### ⚙️ 2. Локальный запуск через Gradle
+## ⚙️ 2. Локальный запуск через Gradle
 
-Находясь в корневой папке проекта `sandgame`, выполните:
+Находясь в корневой папке `sandgame`, выполните:
 
-**Для Linux/macOS:**
+### **Linux/macOS**
 
 ```bash
 ./gradlew bootRun
 ```
 
-**Для Windows:**
+### **Windows**
 
 ```bash
 gradlew.bat bootRun
@@ -38,48 +38,98 @@ gradlew.bat bootRun
 
 После запуска приложение будет доступно по адресу:
 
-[Сюда](http://localhost:8080)
+👉 [http://localhost:8080](http://localhost:8080)
 
 ---
 
-### 🐳 3. Подготовка Docker-образа
+# 🐳 3. Сборка Docker-образов (ARM и x86)
 
-1. Сборка JAR-файла с production-режимом Vaadin:
+Сначала необходимо собрать JAR-файл в production-режиме:
 
 ```bash
 ./gradlew clean bootJar -Pvaadin.productionMode
 ```
 
-2. Сборка Docker-образа:
+---
+
+## Сборка Docker-образов
+
+### **ARM (обычно Mac M1/M2/M3, Raspberry Pi и т.п.)**
 
 ```bash
-docker build -t sandgame_image .
+docker build -t sandgame_image_arm .
 ```
 
-3. Запуск контейнера:
+### **x86 (обычно Linux/Windows серверы, большинство облаков)**
 
 ```bash
-docker run --rm -p 8080:8080 --name sandgame sandgame_image
+docker buildx build --platform linux/amd64 -t sandgame_image_x86 .
 ```
 
-Приложение будет доступно по адресу:
+---
 
-[Сюда](http://localhost:8080)
+## Запуск контейнеров
 
-Можем сохранить образ и передать его любым способом
+### **ARM**
 
 ```bash
-docker save -o sandgame_image.tar sandgame_image
+docker run --rm -p 8080:8080 --name sandgame sandgame_image_arm
 ```
 
-Получатель должен распокавать образ командой 
+### **x86**
 
 ```bash
-docker load -i sandgame_image.tar 
+docker run --rm -p 8080:8080 --name sandgame sandgame_image_x86
 ```
 
-И запустить проект 
+После запуска приложение будет доступно по адресу:
+
+👉 [http://localhost:8080](http://localhost:8080)
+
+---
+
+# 📦 4. Экспорт и передача Docker-образов
+
+### **Сохранение ARM-образа**
 
 ```bash
-docker run --rm -p 8080:8080 --name sandgame sandgame_image
+docker save -o sandgame_image_arm.tar sandgame_image_arm
+```
+
+### **Сохранение x86-образа**
+
+```bash
+docker save -o sandgame_image_x86.tar sandgame_image_x86
+```
+
+---
+
+## 5. Импорт получателем
+
+### **ARM**
+
+```bash
+docker load -i sandgame_image_arm.tar
+```
+
+### **x86**
+
+```bash
+docker load -i sandgame_image_x86.tar
+```
+
+---
+
+## 6. Запуск импортированных образов
+
+### **ARM**
+
+```bash
+docker run -d -p 8080:8080 --name sandgame sandgame_image_arm
+```
+
+### **x86**
+
+```bash
+docker run -d -p 8080:8080 --name sandgame sandgame_image_x86
 ```
